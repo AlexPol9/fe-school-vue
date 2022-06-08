@@ -48,6 +48,9 @@
 		</transition>
 
 		{{ loading }}
+		<TestCheckbox value="1" :checkedItems="chkArr" @change="setArrOfValues" />
+		<TestCheckbox value="2" :checkedItems="chkArr" @change="setArrOfValues" />
+		<TestCheckbox value="3" :checkedItems="chkArr" @change="setArrOfValues" />
 	</div>
 </template>
 
@@ -82,7 +85,8 @@ export default {
 			obj1: {
 				aa: 1
 			},
-			show: false
+			show: false,
+			arrOfValues: []
 		}
 	},
 	watch: {
@@ -178,6 +182,9 @@ export default {
 			// })
 			// this.$set(this.arr, 0, this.arr[0] + 1 );
 			// this.arr.push(this.arr[0] + 10 )
+		},
+		setArrOfValues(val) {
+			this.arrOfValues = val
 		}
 	},
 }
