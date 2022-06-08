@@ -51,6 +51,7 @@
 		<TestCheckbox value="1" :checkedItems="chkArr" @change="setArrOfValues" />
 		<TestCheckbox value="2" :checkedItems="chkArr" @change="setArrOfValues" />
 		<TestCheckbox value="3" :checkedItems="chkArr" @change="setArrOfValues" />
+		<Button @click="addArrOfValues">AddArrOfValues</Button>
 	</div>
 </template>
 
@@ -185,6 +186,9 @@ export default {
 		},
 		setArrOfValues(val) {
 			this.arrOfValues = val
+		},
+		addArrOfValues() {
+			this.arrOfValues.push('1')
 		}
 	},
 }
