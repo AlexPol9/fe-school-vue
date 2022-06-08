@@ -48,10 +48,16 @@
 		</transition>
 
 		{{ loading }}
-		<TestCheckbox value="1" :checkedItems="chkArr" @change="setArrOfValues" />
-		<TestCheckbox value="2" :checkedItems="chkArr" @change="setArrOfValues" />
-		<TestCheckbox value="3" :checkedItems="chkArr" @change="setArrOfValues" />
 		<Button @click="addArrOfValues">AddArrOfValues</Button>
+		<!-- <TestCheckbox value="1" :checkedItems="arrOfValues" @change="setArrOfValues" />
+		<TestCheckbox value="2" :checkedItems="arrOfValues" @change="setArrOfValues" />
+		<TestCheckbox value="3" :checkedItems="arrOfValues" @change="setArrOfValues" /> -->
+
+		<TestCheckbox v-for="item in Object.keys(objArr)"
+			:key="item"
+			:value="item" 
+			:checkedItems="arrOfValues" 
+			@change="setArrOfValues" />
 	</div>
 </template>
 
@@ -87,7 +93,12 @@ export default {
 				aa: 1
 			},
 			show: false,
-			arrOfValues: []
+			arrOfValues: ['12'],
+			objArr: {
+				'10': null,
+				'11': null,
+				'12': null
+			}
 		}
 	},
 	watch: {
@@ -188,7 +199,7 @@ export default {
 			this.arrOfValues = val
 		},
 		addArrOfValues() {
-			this.arrOfValues.push('1')
+			this.arrOfValues.push('11')
 		}
 	},
 }
