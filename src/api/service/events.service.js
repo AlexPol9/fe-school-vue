@@ -1,9 +1,10 @@
 export default api => {
 	api.Events = {
-		getEvents() {
+		getEvents(dto) {
             return api.instance.request({
-                method: 'get',
-                url: `events`,
+                method: 'post',
+				url: `tasks`,
+				data: dto
             })
         },
 	}

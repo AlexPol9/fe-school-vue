@@ -3,6 +3,7 @@ Vue.use({
         
         Vue.prototype.$message = (text) => {
             alert(text)
+            console.log(Vue.prototype)
         }
 	}
 })

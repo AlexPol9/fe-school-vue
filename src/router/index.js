@@ -13,6 +13,20 @@ const router = () => {
 		// Otherwise we'll get instances conflict
 		mode: 'hash',
 		routes: [
+			// { 
+			// 	// path: '/user/:id', 
+			// 	path: '/taskEdit', 
+			// 	name: 'TaskAdd',
+			// 	component: TaskEdit, 
+			// 	props: true,
+			// },
+			// { 
+			// 	// path: '/user/:id', 
+			// 	path: '/taskEdit/:id?', 
+			// 	name: 'TaskEdit',
+			// 	component: TaskEdit, 
+			// 	props: true,
+			// },
 			{ 
 				// path: '/user/:id', 
 				path: '/user/:color', 
@@ -21,7 +35,7 @@ const router = () => {
 				props: true,
 				children: [
 					{
-						path: 'subuser',
+						path: ':color',
 						name: 'SubListView',
 						component: SubListView,
 						props: true,
@@ -44,11 +58,20 @@ const router = () => {
 		
 	});
 
-	// r.beforeEach((to, from, next) => {
-	// 	console.log(from)
-	// 	console.log(to)
-	// 	//next()
-	// })
+	const auth = false;
+
+	r.beforeEach((to, from, next) => {
+		console.log(localStorage.getItem('login'))
+
+		next()
+
+		// if(auth) {
+		// 	next()
+		// } else if(from.path !== '/login') {
+		// 	r.push('/login')
+		// }
+		
+	})
 
 	return r
 }
