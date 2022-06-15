@@ -66,7 +66,7 @@ export default {
 			border: 1px solid black;
 
 			&.-active {
-				border-color: red;
+				border-color: $danger;
 			}
 		}
 		&-menu {

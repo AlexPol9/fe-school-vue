@@ -1,7 +1,7 @@
 <template>
   <div>
     <input
-      type="checkbox"
+      type="radio"
       :value="value"
       v-model="change"
       v-bind="$attrs"
@@ -11,16 +11,16 @@
 
 <script>
 export default {
-  // model: {
-  //   prop: "checkedItems",
-  //   event: "change",
-  // },
+  model: {
+    prop: "checkedItems",
+    event: "change",
+  },
   props: {
     value: {
       type: String,
       required: true
     },
-    checkedItems: [Array, String],
+    checkedItems: [Boolean],
   },
   data() {
     return {

@@ -49,8 +49,30 @@ export default {
 			
 		},
 		fetchEvents: ({ dispatch, commit, getters }, value) => {
+			const dto = {
+				"filter": {
+				  "query": "",
+				//   "assignedUsers": [
+					
+				//   ],
+				//   "userIds": [
+					
+				//   ],
+				//   "type": [
+					
+				//   ],
+				//   "status": [
+					
+				//   ],
+				//   "rank": [
+					
+				//   ]
+				},
+				"page": 0,
+				"limit": 10
+			  };
 			dispatch('setLoading', true)
-			api.Events.getEvents()
+			api.Events.getEvents(dto)
 			.then(({data}) => {
 				setTimeout( () => {
 					dispatch('setLoading', false)

@@ -6,7 +6,11 @@ import router from '@/router'
 import store from '@/store'
 import '@/plugins/message'
 
+import vClickOutside from 'v-click-outside'
+
 Vue.use(Api)
+
+Vue.use(vClickOutside)
 
 // Register local assets & components globally
 require('@/utils/register-assets')

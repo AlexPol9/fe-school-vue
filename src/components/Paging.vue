@@ -1,24 +1,23 @@
 <template>
 	<!-- <div class="dropdown-wrapper" v-deprecated="'sss'"> -->
-	<div class="dropdown-wrapper"  v-click-outside="close">
-		<div class="dropdown-button" :class="{'-active': isActive}" @click="toggle">
-			<svg width="10" height="12">
-				<use :xlink:href="href" />
-			</svg>
-		</div>
-		<div class="dropdown-menu" v-if="isActive">
-			<slot :isActive="isActive"></slot>
-			<!-- <slot name="drop-item"></slot> -->
-		</div>
+	<div class="dropdown-wrapper">
+		<Button @click="onChange(page - 1)">Назад</Button>
+
+		<Button v-for="item in pages" :key="item" @click="onChange(page)">{{item}}</Button>
+
+		<Button>Иперед</Button>
+		{{`Показано pageFrom - lastItem из total`}}
 	</div>
 </template>
 
 <script>
 import deprecated from '../common/directives/deprecated'
+// import vClickOutside from 'v-click-outside'
 
 export default {
 	directives: {
 		deprecated,
+		// vClickOutside
 	},
 	inheritAttrs: false,
 	data() {
@@ -27,12 +26,32 @@ export default {
 		}
 	},
 	props: {
-		
+		pageFrom: Number,
+		pageSize: Number,
+		total: Number
+
 	},
 	
 	computed: {
 		href() {
 			return `#dropdown-icon`
+		},
+		page() {
+			this.pageFrom = 10
+
+			return pageFrom / pageSize
+
+		},
+		lastItem() {
+			return pageFrom + pageSize > total ? total : pageFrom + pageSize
+		},
+		comp: {
+			get() {
+				return pageFrom / pageSize
+			},
+			set(val) {
+				this.pageFrom = val
+			}
 		}
 	},
 	mounted() {
@@ -45,6 +64,9 @@ export default {
 		},
 		close() {
 			this.isActive = false
+		},
+		onChange(page) {
+			this.$emit('change', page)
 		}
 	},
 }
@@ -68,7 +90,6 @@ export default {
 			left: 0px;
 			border: 1px solid black;
 			background: white;
-			z-index: 1;
 
 			&-item {
 				border-bottom: 1px solid black;

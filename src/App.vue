@@ -4,13 +4,13 @@
 		<TestComp2 placeholder="test1" :param1="counter" :param2="arr" :param3="obj" :text="app1" v-model="app1" @input="onInput"/>
 		<component :is="componentName" placeholder="test1" :param1="counter" :param2="arr" :param3="obj" :text="app1" v-model="app1" @input="onInput" /> -->
 		<DropdownButton  style="width: 200px;" >
-			<div class="dropdown-menu-item">
+			<div class="dropdown-menu-item" @click="alert('1')">
 				1
 			</div>
-			<div class="dropdown-menu-item">
+			<div class="dropdown-menu-item"  @click="alert('2')">
 				2
 			</div>
-			<div class="dropdown-menu-item">
+			<div class="dropdown-menu-item"  @click="alert('3')">
 				3
 			</div>
 		</DropdownButton>
@@ -32,6 +32,7 @@
 
 		<Button @click="onObjClick">{{obj1.aa}}{{cc}}</Button>
 		<Button @click="onArrClick">Change Arr</Button>
+		<Button @click="fetchEvents">Fetch</Button>
 
 
 		<router-link :to="link1">red</router-link>
@@ -47,7 +48,13 @@
 			<p v-if="show">привет</p>
 		</transition>
 
+		<Textarea v-autoheight v-model="text" />
+
 		{{ loading }}
+		<!-- <TestCheckbox name="checkbox1" value="1" v-model="chk1" />
+		<TestCheckbox name="checkbox1" value="2" v-model="chk2" />
+		<TestCheckbox name="checkbox1" value="3" v-model="chk3" /> -->
+
 		<Button @click="addArrOfValues">AddArrOfValues</Button>
 		<!-- <TestCheckbox value="1" :checkedItems="arrOfValues" @change="setArrOfValues" />
 		<TestCheckbox value="2" :checkedItems="arrOfValues" @change="setArrOfValues" />
@@ -58,6 +65,31 @@
 			:value="item" 
 			:checkedItems="arrOfValues" 
 			@change="setArrOfValues" />
+
+		{{ arrOfValues }}
+
+
+		<TestCheckboxSingle v-model="chk1"  /> {{chk1}}
+
+		<Radio value="item1"  v-model="radioVal"  />
+		<Radio value="item2"  v-model="radioVal"  /> {{radioVal}}
+
+		<DropdownButton  style="width: 200px;" >
+			<div class="dropdown-menu-item" @click="alertFn('1')">
+				1
+			</div>
+			<div class="dropdown-menu-item"  @click="alertFn('2')">
+				2
+			</div>
+			<div class="dropdown-menu-item"  @click="alertFn('3')">
+				3
+			</div>
+		</DropdownButton>
+
+		<Select :items="selectArr" v-model="selectVal" />
+		<!-- <input class="ddd" type="checkbox" value="1" v-model="chkArr" @change="onChange"  />
+		<input class="ddd" type="checkbox" value="2" v-model="chkArr" @change="onChange" />
+		<input class="ddd" type="checkbox" value="3" v-model="chkArr" @change="onChange" /> -->
 	</div>
 </template>
 
@@ -65,7 +97,13 @@
 import { mapGetters, mapActions } from 'vuex'
 import { setTimeout } from 'timers';
 
+import autoheight from '@/common/directives/autoheight'
+
 export default {
+	directives: {
+		autoheight
+	},
+
 	data() {
 		return {
 			alert: 'Hello <br/>word',
@@ -93,12 +131,25 @@ export default {
 				aa: 1
 			},
 			show: false,
+			text: '',
+			chk1: false,
+			chk2: false,
+			chk3: false,
+			chkArr: [],
+			checkedInput: [],
 			arrOfValues: ['12'],
 			objArr: {
 				'10': null,
 				'11': null,
 				'12': null
-			}
+			},
+			radioVal: null,
+
+			selectArr: [
+				{id: 1, name: 'item1'},
+				{id: 2, name: 'item2'},
+			],
+			selectVal: null
 		}
 	},
 	watch: {
@@ -109,13 +160,13 @@ export default {
 
 	
 	computed: {
-		...mapGetters(['loading']),
+		...mapGetters(['loading', 'events']),
 		sfdsfdsf() {
 			return 11
 		},
-		text() {
-			return 'Current date' + new Date().toISOString() + '; count: ' + this.counter
-		},
+		// text() {
+		// 	return 'Current date' + new Date().toISOString() + '; count: ' + this.counter
+		// },
 		text2() {
 			return 'Hello ' + this.text
 		},
@@ -146,6 +197,15 @@ export default {
 		// 	console.log(data);
 		// })
 		this.fetchEvents()
+		.then((data) => {
+			console.log(data)
+		})
+		if ( this.$route.path) {
+
+		}
+		localStorage.setItem('login', 'Login ddd')
+		
+		//this.$store.actions.fetchEvents()
 		// this.$router.push({
 		// 		name: 'ListView1',
 		// 		params: {
@@ -154,7 +214,7 @@ export default {
 		// 	})
 	},
 	methods: {
-		...mapActions(['setLoading', 'fetchEvents']),
+		...mapActions('app1', ['setLoading', 'fetchEvents']),
 		getDate() {
 			return new Date()
 		},
@@ -195,11 +255,26 @@ export default {
 			// this.$set(this.arr, 0, this.arr[0] + 1 );
 			// this.arr.push(this.arr[0] + 10 )
 		},
+		onChange(e) {
+			console.log(e)
+		},
+
+		check(ev){
+			ev.target.checked 
+			?
+			this.checkedInput.push(ev.target.value)
+			:
+			this.checkedInput = this.checkedInput.filter(item => item != ev.target.value)
+		},
+
 		setArrOfValues(val) {
 			this.arrOfValues = val
 		},
 		addArrOfValues() {
 			this.arrOfValues.push('11')
+		},
+		alertFn(text) {
+			window.alert(text)
 		}
 	},
 }

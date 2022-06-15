@@ -11,16 +11,16 @@
 
 <script>
 export default {
-  // model: {
-  //   prop: "checkedItems",
-  //   event: "change",
-  // },
+  model: {
+    prop: "checkedItems",
+    event: "change",
+  },
   props: {
     value: {
       type: String,
       required: true
     },
-    checkedItems: [Array, String],
+    checkedItems: [Boolean],
   },
   data() {
     return {

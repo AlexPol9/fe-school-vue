@@ -1,14 +1,13 @@
 <template>
 	<!-- <div class="dropdown-wrapper" v-deprecated="'sss'"> -->
-	<div class="dropdown-wrapper"  v-click-outside="close">
+	<div class="dropdown-wrapper" >
 		<div class="dropdown-button" :class="{'-active': isActive}" @click="toggle">
-			<svg width="10" height="12">
-				<use :xlink:href="href" />
-			</svg>
+			{{ selectedText }}
 		</div>
 		<div class="dropdown-menu" v-if="isActive">
-			<slot :isActive="isActive"></slot>
-			<!-- <slot name="drop-item"></slot> -->
+			<div v-for="item in items" :key="item.id" @click="onSelect(item.id)"> 
+				{{item.name}} - {{isSelected(item.id)}}
+			</div>
 		</div>
 	</div>
 </template>
@@ -27,12 +26,22 @@ export default {
 		}
 	},
 	props: {
-		
+		value: String,
+		items: {
+			type: Array,
+			default: () => []
+		}
 	},
 	
 	computed: {
 		href() {
 			return `#dropdown-icon`
+		},
+		selectedItem() {
+			return _.find(this.items, x => x.id === this.value)
+		},
+		selectedText() {
+			return this.selectedItem ? this.selectedItem.name : 'not selected'
 		}
 	},
 	mounted() {
@@ -45,6 +54,13 @@ export default {
 		},
 		close() {
 			this.isActive = false
+		},
+		onSelect(id) {
+			// const index = this.items.
+			this.$emit('input', id)
+		},
+		isSelected(id) {
+			return this.value === id
 		}
 	},
 }
